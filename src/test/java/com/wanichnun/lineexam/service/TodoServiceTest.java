@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -37,7 +38,7 @@ public class TodoServiceTest {
         String mockTaskName = "mock-task";
         Boolean mockIsPinned = false;
         Boolean mockIsDone = false;
-        Long mockOrder = 1L;
+        Long mockOrder = 0L;
         Date mockDate = new Date();
 
         Todo mockTodo = new Todo();
@@ -57,6 +58,41 @@ public class TodoServiceTest {
 
         Assert.assertEquals(mockTaskName, actual.getTaskName());
         Assert.assertEquals(mockUserId, actual.getUserId());
+        Assert.assertEquals(mockOrder, actual.getOrder());
+        Assert.assertEquals(mockIsDone, actual.getIsDone());
+        Assert.assertEquals(mockIsPinned, actual.getIsPinned());
+        Assert.assertEquals(mockDate, actual.getDate());
+    }
+
+    @Test
+    public void testUpdateSuccess() {
+        String mockUserId = "U1";
+        String mockTaskName = "mock-task";
+        Boolean mockIsPinned = false;
+        Boolean mockIsDone = false;
+        Long mockOrder = 0L;
+        Date mockDate = new Date();
+
+        Todo mockTodo = new Todo();
+        mockTodo.setUserId(mockUserId);
+        mockTodo.setTaskName(mockTaskName);
+        mockTodo.setOrder(mockOrder);
+        mockTodo.setIsPinned(mockIsPinned);
+        mockTodo.setIsDone(mockIsDone);
+        mockTodo.setDate(mockDate);
+
+        Optional<Todo> mockTodoOpt = Optional.of(mockTodo);
+
+        when(todoRepository.findByIdAndUserId(any(), any())).thenReturn(mockTodoOpt);
+        when(todoRepository.save(any())).thenReturn(mockTodoOpt.get());
+
+        Todo actual = todoService.update("AAA", "USERID", false, false, 0L);
+
+        verify(todoRepository, times(1)).findByIdAndUserId(any(), any());
+        verify(todoRepository, times(1)).save(any());
+
+        Assert.assertEquals(mockUserId, actual.getUserId());
+        Assert.assertEquals(mockTaskName, actual.getTaskName());
         Assert.assertEquals(mockOrder, actual.getOrder());
         Assert.assertEquals(mockIsDone, actual.getIsDone());
         Assert.assertEquals(mockIsPinned, actual.getIsPinned());

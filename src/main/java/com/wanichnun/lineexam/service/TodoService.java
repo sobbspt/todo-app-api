@@ -69,7 +69,7 @@ public class TodoService {
     public Todo update(String id, String userId, Boolean isPinned, Boolean isDone, Long order) {
         Optional<Todo> result = todoRepository.findByIdAndUserId(id, userId);
         require(result.isPresent(), "Resource not found");
-
+        System.out.println("result " + result);
         Todo todo = result.get();
         todo.setIsPinned(isPinned);
         todo.setIsDone(isDone);

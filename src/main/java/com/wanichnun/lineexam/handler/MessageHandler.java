@@ -37,25 +37,8 @@ public class MessageHandler {
             }
             else {
                 String userId = event.getSource().getUserId();
-                Boolean isPinned = false;
-                Boolean isDone = false;
-                Long order = 0L;
-
-                String[] message = event.getMessage().getText().split(" : ");
-                require(message.length >= 2 && message.length <= 3, "Invalid text format");
-
-                String taskName = message[0];
-                String dateText = message[1];
-                String timeText = "12:00";
-                if (message.length > 2) {
-                    timeText = message[2];
-                }
-
-                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
-                Date date = format.parse(dateText + " " + timeText);
-                todoService.create(userId, taskName, isPinned, isDone, order, date);
-
-                return new TextMessage("success");
+                String messageContent = event.getMessage().getText();
+                return todoService.handleTodoCreateRequest(userId, messageContent);
             }
         }
         catch (RequireViolation re) {

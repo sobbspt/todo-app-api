@@ -3,18 +3,17 @@ package com.wanichnun.lineexam.service;
 import com.linecorp.bot.model.message.TextMessage;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.wanichnun.lineexam.document.Todo;
+import com.wanichnun.lineexam.model.ResponseModel;
 import com.wanichnun.lineexam.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.valid4j.Assertive.require;
 
@@ -78,5 +77,10 @@ public class TodoService {
         Todo updatedTodo = todoRepository.save(todo);
         log.info("Updated todo {}", updatedTodo);
         return updatedTodo;
+    }
+
+    public List<Todo> listTodos(String userId) {
+        List<Todo> todoList = todoRepository.findByUserId(userId);
+        return todoList;
     }
 }

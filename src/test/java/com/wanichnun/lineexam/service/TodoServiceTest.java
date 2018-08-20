@@ -11,9 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -97,6 +95,39 @@ public class TodoServiceTest {
         Assert.assertEquals(mockIsDone, actual.getIsDone());
         Assert.assertEquals(mockIsPinned, actual.getIsPinned());
         Assert.assertEquals(mockDate, actual.getDate());
+    }
+
+    @Test
+    public void testListTodosSuccess() {
+        String mockUserId = "U1";
+        String mockTaskName = "mock-task";
+        Boolean mockIsPinned = false;
+        Boolean mockIsDone = false;
+        Long mockOrder = 0L;
+        Date mockDate = new Date();
+
+        Todo mockTodo = new Todo();
+        mockTodo.setUserId(mockUserId);
+        mockTodo.setTaskName(mockTaskName);
+        mockTodo.setOrder(mockOrder);
+        mockTodo.setIsPinned(mockIsPinned);
+        mockTodo.setIsDone(mockIsDone);
+        mockTodo.setDate(mockDate);
+
+        when(todoRepository.findByUserId(any())).thenReturn(Arrays.asList(mockTodo));;
+
+        List<Todo> actual = todoService.listTodos("AAA");
+
+        verify(todoRepository, times(1)).findByUserId(any());
+
+        Assert.assertEquals(1, actual.size());
+
+        Assert.assertEquals(mockUserId, actual.get(0).getUserId());
+        Assert.assertEquals(mockTaskName, actual.get(0).getTaskName());
+        Assert.assertEquals(mockOrder, actual.get(0).getOrder());
+        Assert.assertEquals(mockIsDone, actual.get(0).getIsDone());
+        Assert.assertEquals(mockIsPinned, actual.get(0).getIsPinned());
+        Assert.assertEquals(mockDate, actual.get(0).getDate());
     }
 
     @Test

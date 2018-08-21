@@ -1,4 +1,4 @@
-package com.wanichnun.lineexam.document;
+package com.wanichnun.todoapp.document;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

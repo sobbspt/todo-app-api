@@ -1,4 +1,4 @@
-package com.wanichnun.lineexam.model;
+package com.wanichnun.todoapp.model;
 
 import lombok.Data;
 

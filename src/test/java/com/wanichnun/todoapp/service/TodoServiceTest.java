@@ -1,7 +1,7 @@
-package com.wanichnun.lineexam.service;
+package com.wanichnun.todoapp.service;
 
-import com.wanichnun.lineexam.document.Todo;
-import com.wanichnun.lineexam.repository.TodoRepository;
+import com.wanichnun.todoapp.document.Todo;
+import com.wanichnun.todoapp.repository.TodoRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

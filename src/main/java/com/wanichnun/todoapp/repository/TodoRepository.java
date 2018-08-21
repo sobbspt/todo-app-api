@@ -1,6 +1,6 @@
-package com.wanichnun.lineexam.repository;
+package com.wanichnun.todoapp.repository;
 
-import com.wanichnun.lineexam.document.Todo;
+import com.wanichnun.todoapp.document.Todo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

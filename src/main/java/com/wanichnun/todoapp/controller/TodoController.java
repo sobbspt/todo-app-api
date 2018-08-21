@@ -1,9 +1,9 @@
-package com.wanichnun.lineexam.controller;
+package com.wanichnun.todoapp.controller;
 
-import com.wanichnun.lineexam.model.Response;
-import com.wanichnun.lineexam.model.ResponseModel;
-import com.wanichnun.lineexam.model.TodoUpdateRequest;
-import com.wanichnun.lineexam.service.TodoService;
+import com.wanichnun.todoapp.model.Response;
+import com.wanichnun.todoapp.model.ResponseModel;
+import com.wanichnun.todoapp.model.TodoUpdateRequest;
+import com.wanichnun.todoapp.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

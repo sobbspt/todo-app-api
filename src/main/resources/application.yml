@@ -1,9 +1,5 @@
-line:
-  bot:
-    channelToken: 8G/19OV1PFe3LtbbUIK1YhzQBtigpfk2ncxGA+Ul3yzDhRKEl2O6rJUj/RmMMe93lojH6foXpZ5Ruw6CpN6+/klIWoQT3dIGI3iMl6aYvd8qYjcpSMpC4/WsYi6OaSUhf+UADvVyOBdHvIPpN8dL5QdB04t89/1O/w1cDnyilFU=
-    channelSecret: 52f1f89f193bd08fa092371e9865afc8
-
 spring:
+  profiles: dev
   devtools:
     restart:
       enabled: true
@@ -12,3 +8,26 @@ spring:
       mongodb:
         host: localhost
         database: todo
+
+line:
+  bot:
+    channelToken: 8G/19OV1PFe3LtbbUIK1YhzQBtigpfk2ncxGA+Ul3yzDhRKEl2O6rJUj/RmMMe93lojH6foXpZ5Ruw6CpN6+/klIWoQT3dIGI3iMl6aYvd8qYjcpSMpC4/WsYi6OaSUhf+UADvVyOBdHvIPpN8dL5QdB04t89/1O/w1cDnyilFU=
+    channelSecret: 52f1f89f193bd08fa092371e9865afc8
+---
+spring:
+  profiles: prod
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src
+  data:
+      mongodb:
+        host: ds125352.mlab.com:25352
+        database: todoexam
+        username: todo_app
+        password: ToDo@pp1
+
+line:
+  bot:
+    channelToken: 8G/19OV1PFe3LtbbUIK1YhzQBtigpfk2ncxGA+Ul3yzDhRKEl2O6rJUj/RmMMe93lojH6foXpZ5Ruw6CpN6+/klIWoQT3dIGI3iMl6aYvd8qYjcpSMpC4/WsYi6OaSUhf+UADvVyOBdHvIPpN8dL5QdB04t89/1O/w1cDnyilFU=
+    channelSecret: 52f1f89f193bd08fa092371e9865afc8

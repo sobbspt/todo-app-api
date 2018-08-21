@@ -1,13 +1,10 @@
-package com.wanichnun.lineexam.service;
+package com.wanichnun.todoapp.service;
 
 import com.linecorp.bot.model.message.TextMessage;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.wanichnun.lineexam.document.Todo;
-import com.wanichnun.lineexam.model.ResponseModel;
-import com.wanichnun.lineexam.repository.TodoRepository;
+import com.wanichnun.todoapp.document.Todo;
+import com.wanichnun.todoapp.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;

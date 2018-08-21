@@ -15,7 +15,7 @@ line:
     channelSecret: 52f1f89f193bd08fa092371e9865afc8
 ---
 spring:
-  profiles: prod
+  profiles: default
   devtools:
     restart:
       enabled: true

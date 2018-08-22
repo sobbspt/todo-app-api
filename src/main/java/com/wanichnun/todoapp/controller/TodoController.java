@@ -10,18 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/v1/users/{userId}/todos")
+@RequestMapping(path = "/api/v1/users")
 public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping
+    @GetMapping(path = "{userId}/todos")
     public HttpEntity<ResponseModel> getAll(
             @PathVariable(name = "userId") String userId) {
         return new ResponseModel(Response.SUCCESS.getContent(), todoService.listTodos(userId)).build(HttpStatus.OK);
     }
 
-    @PutMapping(path = "{todoId}")
+    @PutMapping(path = "{userId}/todos/{todoId}")
     public HttpEntity<ResponseModel> update(
             @PathVariable(name = "userId") String userId,
             @PathVariable(name = "todoId") String todoId,

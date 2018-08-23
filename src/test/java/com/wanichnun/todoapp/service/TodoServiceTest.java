@@ -228,13 +228,4 @@ public class TodoServiceTest {
 
         Assert.assertEquals("Invalid date format", textMessage.getText());
     }
-
-
-    @Test
-    public void test() throws ParseException {
-        String test = "2/1/2018 12:00";
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
-        Date date = format.parse(test);
-        System.out.println(date);
-    }
 }

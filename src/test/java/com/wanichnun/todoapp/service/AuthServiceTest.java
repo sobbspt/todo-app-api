@@ -15,13 +15,10 @@ public class AuthServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @Mock
-    private Environment environment;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        authService = new AuthService(restTemplate, environment);
+        authService = new AuthService(restTemplate);
     }
 
     @Test

@@ -37,22 +37,12 @@ public class AuthService {
 
     private RestTemplate restTemplate;
 
-    private Environment environment;
-
     @Autowired
-    public AuthService(RestTemplate restTemplate, Environment environment) {
+    public AuthService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.environment = environment;
     }
 
     public AuthResponse getAccessToken(AuthRequest request) {
-        String getAccessTokenUrl = "https://api.line.me/v2/oauth/accessToken";
-
-        String clientId = "1601887173";
-        String clientSecret = "9df37fe9ad6c3c6ba0d6146be02489d5";
-        String grantType = "authorization_code";
-        String redirectUri = "https://todo-d976c.firebaseapp.com/callback";
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

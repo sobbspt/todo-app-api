@@ -23,6 +23,7 @@ public class TodoService {
     private static final String TOMORROW = "tomorrow";
     private static final String INVALID_TEXT_FORMAT = "Invalid text format";
     private static final String INVALID_DATE_FORMAT = "Invalid date format";
+    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
     private TodoRepository todoRepository;
 
@@ -46,7 +47,7 @@ public class TodoService {
             timeText = splittedMessage[2];
         }
 
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 
         if (dateText.equalsIgnoreCase(TODAY)) {
             dateText = convertDate(TODAY);

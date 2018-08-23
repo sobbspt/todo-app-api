@@ -18,5 +18,7 @@ line:
   clientSecret: ${LINE_CLIENT_SECRET}
   grantType: ${LINE_GRANT_TYPE}
   redirectUri: ${LINE_REDIRECT_URI}
+web:
+  url: ${WEB_URL}
 server:
   port: ${PORT}

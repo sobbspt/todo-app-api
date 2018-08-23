@@ -5,9 +5,11 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import com.wanichnun.todoapp.annotation.LogExecutionTime;
 import com.wanichnun.todoapp.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.valid4j.errors.RequireViolation;
 
 import java.text.ParseException;
@@ -17,17 +19,23 @@ import static org.valid4j.Assertive.require;
 @LineMessageHandler
 @Slf4j
 public class MessageHandler {
-    String edit = "edit";
 
     @Autowired
     private TodoService todoService;
 
+    private static final String EDIT = "edit";
+    private static final String WRONG_FORMAT = "Wrong format";
+
+    @Value("${web.url}")
+    private String webUrl;
+
+    @LogExecutionTime
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws ParseException {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         log.info("Got message this bot: {}", event);
         try {
-            if (edit.equals(event.getMessage().getText())) {
-                return new TextMessage("https://google.com");
+            if (EDIT.equals(event.getMessage().getText())) {
+                return new TextMessage(webUrl);
             }
             else {
                 String userId = event.getSource().getUserId();
@@ -41,7 +49,7 @@ public class MessageHandler {
         catch (Exception e) {
             e.printStackTrace();
             log.error("Error " + e);
-            return new TextMessage("Wrong format");
+            return new TextMessage(WRONG_FORMAT);
         }
 
     }

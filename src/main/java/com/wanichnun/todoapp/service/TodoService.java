@@ -1,9 +1,11 @@
 package com.wanichnun.todoapp.service;
 
 import com.linecorp.bot.model.message.TextMessage;
+import com.wanichnun.todoapp.annotation.LogExecutionTime;
 import com.wanichnun.todoapp.document.Todo;
 import com.wanichnun.todoapp.model.Response;
 import com.wanichnun.todoapp.repository.TodoRepository;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
+    @LogExecutionTime
     public TextMessage handleTodoCreateRequest(String userId, String message) {
         Boolean isPinned = false;
         Boolean isDone = false;

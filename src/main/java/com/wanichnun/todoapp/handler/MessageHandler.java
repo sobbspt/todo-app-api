@@ -29,7 +29,6 @@ public class MessageHandler {
     @Value("${web.url}")
     private String webUrl;
 
-    @LogExecutionTime
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         log.info("Got message this bot: {}", event);

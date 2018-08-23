@@ -26,6 +26,8 @@ public class TodoService {
     private static final String INVALID_TEXT_FORMAT = "Invalid text format";
     private static final String INVALID_DATE_FORMAT = "Invalid date format";
     private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+    private static final String DEFAULT_TIME = "12:00";
+    private static final String MESSAGE_SPLITTER = " : ";
 
     private TodoRepository todoRepository;
 
@@ -40,12 +42,12 @@ public class TodoService {
         Boolean isDone = false;
 
 
-        String[] splittedMessage = message.split(" : ");
+        String[] splittedMessage = message.split(MESSAGE_SPLITTER);
         require(splittedMessage.length >= 2 && splittedMessage.length <= 3, INVALID_TEXT_FORMAT);
 
         String taskName = splittedMessage[0];
         String dateText = splittedMessage[1];
-        String timeText = "12:00";
+        String timeText = DEFAULT_TIME;
         if (splittedMessage.length > 2) {
             timeText = splittedMessage[2];
         }

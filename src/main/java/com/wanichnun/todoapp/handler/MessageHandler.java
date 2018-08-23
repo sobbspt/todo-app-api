@@ -33,7 +33,7 @@ public class MessageHandler {
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         log.info("Got message this bot: {}", event);
         try {
-            if (EDIT.equals(event.getMessage().getText())) {
+            if (EDIT.equalsIgnoreCase(event.getMessage().getText())) {
                 return new TextMessage(webUrl);
             }
             else {

@@ -4,6 +4,8 @@ import com.wanichnun.todoapp.model.AuthRequest;
 import com.wanichnun.todoapp.model.AuthResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,8 +19,31 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 public class AuthService {
-    @Autowired
+
+    @Value("${line.getAccessTokenUrl}")
+    private String getAccessTokenUrl;
+
+    @Value("${line.clientId}")
+    private String clientId;
+
+    @Value("${line.clientSecret}")
+    private String clientSecret;
+
+    @Value("${line.grantType}")
+    private String grantType;
+
+    @Value("${line.redirectUri}")
+    private String redirectUri;
+
     private RestTemplate restTemplate;
+
+    private Environment environment;
+
+    @Autowired
+    public AuthService(RestTemplate restTemplate, Environment environment) {
+        this.restTemplate = restTemplate;
+        this.environment = environment;
+    }
 
     public AuthResponse getAccessToken(AuthRequest request) {
         String getAccessTokenUrl = "https://api.line.me/v2/oauth/accessToken";

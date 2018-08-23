@@ -1,39 +1,22 @@
-
-
----
 spring:
-  profiles: dev
   devtools:
     restart:
-      enabled: true
+      enabled: ${DEV_TOOL_ENABLED}
       additional-paths: src
   data:
       mongodb:
-        host: localhost
-        database: todo
+        host: ${MONGO_HOST}
+        database: ${MONGO_DB_NAME}
+        username: ${MONGO_USER}
+        password: ${MONGO_PASSWORD}
 line:
   bot:
-#    channelToken: 8G/19OV1PFe3LtbbUIK1YhzQBtigpfk2ncxGA+Ul3yzDhRKEl2O6rJUj/RmMMe93lojH6foXpZ5Ruw6CpN6+/klIWoQT3dIGI3iMl6aYvd8qYjcpSMpC4/WsYi6OaSUhf+UADvVyOBdHvIPpN8dL5QdB04t89/1O/w1cDnyilFU=
-#    channelSecret: 52f1f89f193bd08fa092371e9865afc8
-    channelToken: UZO234Na089EcMp/2SeFDVlKesy9nK0SUzyZ6QhSOokOO0iNbbde1sjU2Gb9e5oQZPSs9oHGNWwLQ049qWcxv61QkiAhT40z9Y9pZhIxnAqnDG7DIkW0g8lPZ44ppXNcdRqJMQDjrcGCG/QVbU+XHQdB04t89/1O/w1cDnyilFU=
-    channelSecret: 68250ab330c896817551e82523f37be3
+    channelToken: ${LINE_CHANNEL_TOKEN}
+    channelSecret: ${LINE_CHANNEL_SECRET}
+  getAccessTokenUrl: ${LINE_GET_ACCESS_TOKEN_URL}
+  clientId: ${LINE_CLIENT_ID}
+  clientSecret: ${LINE_CLIENT_SECRET}
+  grantType: ${LINE_GRANT_TYPE}
+  redirectUri: ${LINE_REDIRECT_URI}
 server:
-  port: 8082
----
-spring:
-  profiles: default
-  devtools:
-    restart:
-      enabled: true
-      additional-paths: src
-  data:
-      mongodb:
-        host: ds125352.mlab.com:25352
-        database: todoexam
-        username: todo_app
-        password: ToDo@pp1
-
-line:
-  bot:
-    channelToken: 8G/19OV1PFe3LtbbUIK1YhzQBtigpfk2ncxGA+Ul3yzDhRKEl2O6rJUj/RmMMe93lojH6foXpZ5Ruw6CpN6+/klIWoQT3dIGI3iMl6aYvd8qYjcpSMpC4/WsYi6OaSUhf+UADvVyOBdHvIPpN8dL5QdB04t89/1O/w1cDnyilFU=
-    channelSecret: 52f1f89f193bd08fa092371e9865afc8
+  port: ${PORT}

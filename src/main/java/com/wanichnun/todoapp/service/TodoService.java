@@ -18,6 +18,10 @@ import static org.valid4j.Assertive.require;
 @Service
 public class TodoService {
 
+    private static final String TODAY = "today";
+    private static final String TOMORROW = "tomorrow";
+    private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
+
     private TodoRepository todoRepository;
 
     @Autowired
@@ -25,9 +29,10 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    public TextMessage handleTodoCreateRequest(String userId, String message) throws ParseException {
+    public TextMessage handleTodoCreateRequest(String userId, String message) {
         Boolean isPinned = false;
         Boolean isDone = false;
+
 
         String[] splittedMessage = message.split(" : ");
         require(splittedMessage.length >= 2 && splittedMessage.length <= 3, "Invalid text format");
@@ -40,9 +45,39 @@ public class TodoService {
         }
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
-        Date date = format.parse(dateText + " " + timeText);
+
+        if (dateText.equalsIgnoreCase(TODAY)) {
+            dateText = convertDate(TODAY);
+        }
+        if (dateText.equalsIgnoreCase(TOMORROW)) {
+            dateText = convertDate(TOMORROW);
+        }
+
+        Date date;
+        try {
+            date = format.parse(dateText + " " + timeText);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+            return new TextMessage("Invalid date format");
+        }
+
         this.create(userId, taskName, isPinned, isDone, date);
         return new TextMessage("success");
+    }
+
+    private String convertDate(String date) {
+        StringBuilder sb = new StringBuilder();
+        Calendar calendar = Calendar.getInstance();
+
+        if (date.equalsIgnoreCase(TOMORROW)) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        sb.append(calendar.get(Calendar.DAY_OF_MONTH)).append("/");
+        sb.append(calendar.get(Calendar.MONTH)).append("/");
+        sb.append(calendar.get(Calendar.YEAR));
+
+        return sb.toString();
     }
 
     public Todo create(String userId, String taskName, Boolean isPinned, Boolean isDone, Date date) {
@@ -65,24 +100,10 @@ public class TodoService {
         return (long) (todoRepository.findByUserId(userId).size() + 1);
     }
 
-    public Todo update(String id, String userId, Boolean isPinned, Boolean isDone, Long order) {
-        Optional<Todo> result = todoRepository.findByIdAndUserId(id, userId);
-        require(result.isPresent(), "Resource not found");
-        Todo todo = result.get();
-        todo.setIsPinned(isPinned);
-        todo.setIsDone(isDone);
-        todo.setOrder(order);
-
-        Todo updatedTodo = todoRepository.save(todo);
-        log.info("Updated todo {}", updatedTodo);
-        return updatedTodo;
-    }
-
     public List<Todo> listTodos(String userId) {
-        List<Todo> todoList = todoRepository.findByUserIdOrderByDateAsc(userId);
+        List<Todo> todoList = todoRepository.findByUserIdOrderByOrderAsc(userId);
         List<Todo> pinnedTodoList = new ArrayList<>();
         List<Todo> sortedTodoList = new ArrayList<>();
-
         todoList.forEach((todo -> {
             if (todo.getIsPinned()) {
                 pinnedTodoList.add(todo);
@@ -94,5 +115,13 @@ public class TodoService {
         sortedTodoList.addAll(todoList);
 
         return sortedTodoList;
+    }
+
+    public List<Todo> updateOrder(String userId, List<Todo> todoList) {
+        require(todoRepository.findByUserId(userId).size() > 0);
+        for (int i = 0; i < todoList.size(); i++) {
+            todoList.get(i).setOrder((long) i+1);
+        }
+        return todoRepository.saveAll(todoList);
     }
 }

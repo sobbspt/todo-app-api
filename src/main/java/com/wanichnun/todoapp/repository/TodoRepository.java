@@ -12,4 +12,6 @@ public interface TodoRepository extends MongoRepository<Todo, String> {
     List<Todo> findByUserId(String userId);
 
     List<Todo> findByUserIdOrderByDateAsc(String userId);
+
+    List<Todo> findByUserIdOrderByOrderAsc(String userId);
 }

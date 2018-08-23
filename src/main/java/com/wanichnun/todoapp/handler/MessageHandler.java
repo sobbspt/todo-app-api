@@ -39,6 +39,7 @@ public class MessageHandler {
             return new TextMessage(re.getMessage());
         }
         catch (Exception e) {
+            e.printStackTrace();
             log.error("Error " + e);
             return new TextMessage("Wrong format");
         }

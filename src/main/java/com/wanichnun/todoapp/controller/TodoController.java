@@ -1,5 +1,6 @@
 package com.wanichnun.todoapp.controller;
 
+import com.wanichnun.todoapp.document.Todo;
 import com.wanichnun.todoapp.model.Response;
 import com.wanichnun.todoapp.model.ResponseModel;
 import com.wanichnun.todoapp.model.TodoUpdateRequest;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/users")
@@ -21,17 +24,27 @@ public class TodoController {
         return new ResponseModel(Response.SUCCESS.getContent(), todoService.listTodos(userId)).build(HttpStatus.OK);
     }
 
-    @PutMapping(path = "{userId}/todos/{todoId}")
+//    @PutMapping(path = "{userId}/todos/{todoId}")
+//    public HttpEntity<ResponseModel> update(
+//            @PathVariable(name = "userId") String userId,
+//            @PathVariable(name = "todoId") String todoId,
+//            @RequestBody TodoUpdateRequest request
+//    ) {
+//        return new ResponseModel(Response.SUCCESS.getContent(), todoService.update(
+//                todoId,
+//                userId,
+//                request.getIsPinned(),
+//                request.getIsDone(),
+//                request.getOrder())).build(HttpStatus.OK);
+//    }
+
+    @PutMapping(path = "{userId}/todos")
     public HttpEntity<ResponseModel> update(
             @PathVariable(name = "userId") String userId,
-            @PathVariable(name = "todoId") String todoId,
-            @RequestBody TodoUpdateRequest request
+            @RequestBody List<Todo> todoList
     ) {
-        return new ResponseModel(Response.SUCCESS.getContent(), todoService.update(
-                todoId,
+        return new ResponseModel(Response.SUCCESS.getContent(), todoService.updateOrder(
                 userId,
-                request.getIsPinned(),
-                request.getIsDone(),
-                request.getOrder())).build(HttpStatus.OK);
+                todoList)).build(HttpStatus.OK);
     }
 }

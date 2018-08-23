@@ -7,11 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TodoRepository extends MongoRepository<Todo, String> {
-    Optional<Todo> findByIdAndUserId(String id, String userId);
 
     List<Todo> findByUserId(String userId);
-
-    List<Todo> findByUserIdOrderByDateAsc(String userId);
-
     List<Todo> findByUserIdOrderByOrderAsc(String userId);
 }

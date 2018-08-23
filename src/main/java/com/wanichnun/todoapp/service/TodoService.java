@@ -2,6 +2,7 @@ package com.wanichnun.todoapp.service;
 
 import com.linecorp.bot.model.message.TextMessage;
 import com.wanichnun.todoapp.document.Todo;
+import com.wanichnun.todoapp.model.Response;
 import com.wanichnun.todoapp.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class TodoService {
 
     private static final String TODAY = "today";
     private static final String TOMORROW = "tomorrow";
-    private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
+    private static final String INVALID_TEXT_FORMAT = "Invalid text format";
+    private static final String INVALID_DATE_FORMAT = "Invalid date format";
 
     private TodoRepository todoRepository;
 
@@ -35,7 +37,7 @@ public class TodoService {
 
 
         String[] splittedMessage = message.split(" : ");
-        require(splittedMessage.length >= 2 && splittedMessage.length <= 3, "Invalid text format");
+        require(splittedMessage.length >= 2 && splittedMessage.length <= 3, INVALID_TEXT_FORMAT);
 
         String taskName = splittedMessage[0];
         String dateText = splittedMessage[1];
@@ -58,11 +60,11 @@ public class TodoService {
             date = format.parse(dateText + " " + timeText);
         } catch (ParseException pe) {
             pe.printStackTrace();
-            return new TextMessage("Invalid date format");
+            return new TextMessage(INVALID_DATE_FORMAT);
         }
 
         this.create(userId, taskName, isPinned, isDone, date);
-        return new TextMessage("success");
+        return new TextMessage(Response.SUCCESS.getContent());
     }
 
     private String convertDate(String date) {
